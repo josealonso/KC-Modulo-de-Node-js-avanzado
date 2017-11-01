@@ -1,0 +1,65 @@
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header"><a href="/" class="navbar-brand">{{title}}</a></div>
+  
+    <span class="navbar-language-selector">
+      {{#each getLocales}}
+      <a href="/lang/{{this}}" class="language-item">{{this}}</a>
+      {{/each}}
+    </span>
+  </div>
+</div>
+ 
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{i18n "Ads List"}}</h1>
+      <p class="lead">{{i18n "Listing"}}: {{total}}  {{i18n "Of"}}  {{total}} </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+        <thead><tr>
+          <th>{{i18n "Name"}}</th>
+          <th>{{i18n "For Sale"}}</th>
+          <th style="text-align: right">{{i18n "Price"}}</th>
+          <th>{{i18n "Photo"}}</th>
+          <th>{{i18n "Tags"}}</th>
+          <th>#</th>
+        </tr></thead>
+        <tbody>
+
+        {{#each anuncios}}
+          <tr>
+            <td>{{this.nombre}}</td>
+            <td>{{this.venta}}</td>
+            <td style="text-align: right"><{{this.precio}} / 100 €</td>
+            <td><img src="{{this.foto}}"></td>
+            <td>{{this.tags}}</td>
+            <td>{{this.anuncio._id}}</td>
+          </tr>
+         {{/each}}
+
+        </tbody>
+      </table>
+
+      <p>{{i18n "Examples"}}:</p>
+
+      <ul> 
+        <li><a href="?">{{i18n "All the ads"}}</a></li>
+        <li><a href="?start=2&limit=2">{{i18n "paginated"}}</a></li>
+        <li><a href="?sort=precio">{{i18n "Sorted by increasing price"}}</a></li>
+        <li><a href="?sort=-precio">{{i18n "Sorted by decreasing price"}}</a></li>
+        <li><a href="?tag=mobile">{{i18n "With the mobile tag"}}</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <a href="/">{{i18n "Go back home"}}</a>
+
+</div>
+

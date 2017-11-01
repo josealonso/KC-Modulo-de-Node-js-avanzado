@@ -1,0 +1,21 @@
+{
+	"empty_file": "el fichero {{file}} está vacio",
+	"not_found": "No encontrado",
+	"not_valid": "No válido",
+	"generic": "Hubo un error: {{err}}",
+	"paginated": "paginada",
+	"Sorted by increasing price": "Ordenados por precio ascendente",
+	"Examples": "Ejemplos",
+	"All the ads": "Todos(máx. de 1000)",
+	"Sorted by decreasing price": "Ordenados por precio descendente",
+	"With the mobile tag": "Con la etiqueta móvil",
+	"Go back home": "Volver a la página de Inicio",
+	"Name": "Nombre",
+	"For Sale": "Se vende",
+	"Price": "Precio",
+	"Photo": "Foto",
+	"Tags": "Etiquetas",
+	"Ads List": "Lista de anuncios",
+	"Of": "de",
+	"Listing": "Listando"
+}
