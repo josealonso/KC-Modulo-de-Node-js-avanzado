@@ -17,5 +17,10 @@
 	"Tags": "Etiquetas",
 	"Ads List": "Lista de anuncios",
 	"Of": "de",
-	"Listing": "Listando"
+	"Listing": "Listando",
+	"Email address": "Correo electrónico",
+	"Invalid credentials": "Invalid credentials",
+	"Password": "Contraseña",
+	"Please login to access application": "Por favor identifícate para entrar en la aplicación",
+	"Logout": "Salir"
 }

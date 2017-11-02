@@ -6,16 +6,20 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const sessionAuth = require('./lib/sessionAuth');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 
 /* jshint ignore:start */
-const db = require('./lib/connectMongoose');
+const db = require('./lib/connectMongoose'); // ??
 /* jshint ignore:end */
+
+require('dotenv').config(); // inicializamos variables de entrono desde el fichero .env
 
 // Cargamos las definiciones de todos nuestros modelos
 require('./models/Anuncio');
-
+require('./models/Usuario');
+ 
 // view engine setup
 // Source: https://webapplog.com/jade-handlebars-express/
 let helpers = require('./public/hs/helpers');
@@ -30,14 +34,17 @@ const handlebars = require('express-handlebars').create(require('./lib/hbsconf.j
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
+if (process.env.LOG_FORMAT !== 'nolog' ) {
+  app.use(logger(process.env.LOG_FORMAT || 'dev'));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-let myLocale = 'en';
-const i18n = require('./lib/i18nSetup')(myLocale);
+// let myLocale = 'en';
+const i18n = require('./lib/i18nSetup')();
 app.use(i18n.init);
 
 // Global Template variables
@@ -68,16 +75,25 @@ app.use(
 			autoReconnect: true,
 			clear_interval: 3600
 		})
-	})
+	}) 
 );
 
 // Login
-// app.use('/', sessionAuth, require('./routes/index'));
-// app.use('/', sessionAuth(), require('./routes/index'));
+const loginController = require('./routes/loginController');
+
+// usamos las rutas de un controlador
+app.get( '/login',  loginController.index);
+app.post('/login',  loginController.post);
+//app.post('/loginjwt',  loginController.postLoginJWT);
+app.get( '/logout', loginController.logout);
+
+app.use('/', sessionAuth(), require('./routes/index'));    // Ponía sessionAuth y no cargaba ninguna página !!
+app.use('/anuncios', require('./routes/index'));
+// app.use('/hola', require('./routes/hola').router);
 
 // Web
-app.use('/', require('./routes/index'));
-app.use('/anuncios', require('./routes/anuncios'));
+// app.use('/', require('./routes/anuncios'));
+// app.use('/anuncios', require('./routes/anuncios'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

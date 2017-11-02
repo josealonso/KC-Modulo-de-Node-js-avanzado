@@ -1,28 +1,32 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 50px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+	color: #00b7ff;
 }
 
 table tr td img {
-  max-height: 20px;
+	max-height: 20px;
+}
+
+.navbar-logout {
+	font-size: 18px;
 }
 
 .navbar-language-selector {
-  float: right;
-  padding: 10px;
-  font-size: 18px;
-  }
+	float: right;
+	padding: 10px;
+	font-size: 18px;
+}
 
 .language-item {
-  color: white;
-  background: grey;
-  padding: 10px;
+	color: white;
+	background: grey;
+	padding: 10px;
 }
 
 .navbar-language-selector a:hover {
-  text-decoration: none;
+	text-decoration: none;
 }

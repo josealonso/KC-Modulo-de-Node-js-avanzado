@@ -17,5 +17,10 @@
 	"Sorted by decreasing price": "Sorted by decreasing price",
 	"With the mobile tag": "With the mobile tag",
 	"Go back home": "Go back home",
-	"Listing": "Listing"
+	"Listing": "Listing",
+	"Email address": "Email address",
+	"Invalid credentials": "Invalid credentials",
+	"Password": "Password",
+	"Please login to access application": "Please login to access application",
+	"Logout": "Logout"
 }

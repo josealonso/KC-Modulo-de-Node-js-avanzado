@@ -1,15 +1,5 @@
 
-<div class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header"><a href="/" class="navbar-brand">{{title}}</a></div>
-  
-    <span class="navbar-language-selector">
-      {{#each getLocales}}
-      <a href="/lang/{{this}}" class="language-item">{{this}}</a>
-      {{/each}}
-    </span>
-  </div>
-</div>
+{{> header}}
  
 <div class="container">
   <div class="row">
@@ -18,7 +8,7 @@
       <p class="lead">{{i18n "Listing"}}: {{total}}  {{i18n "Of"}}  {{total}} </p>
     </div>
   </div>
-
+ 
   <div class="row">
     <div class="col-md-12">
       <table class="table table-hover">

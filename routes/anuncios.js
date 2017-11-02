@@ -14,8 +14,7 @@ router.get('/', async function(req, res, next) {
 		const includeTotal = true;
 
 		const filters = {};
-		if (req.query.tag) {
-			filters.tags = req.query.tag;
+		if (req.query.tag) { 
 		}
 		if (req.query.venta) {
 			filters.venta = req.query.venta;
