@@ -7,23 +7,23 @@
       </div>
 
     <div class="row h-100">
-      <form method="POST">
+      <form method="POST"> 
         <div class="form-group">
-          <label for="exampleInputEmail1">{{i18n 'Email address'}}</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+          <label for="email">{{i18n 'Email address'}}</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
                 name="email"
-                value={{email}}
+                value={{email}} >
           <small id="emailHelp" class="form-text text-muted"></small>
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">{{i18n 'Password'}}</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="{{i18n 'Password'}}"
+          <label for="password">{{i18n 'Password'}}</label>
+          <input type="password" class="form-control" id="password" placeholder="{{i18n 'Password'}}"
                 name="password">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="login" class="btn btn-primary">{{i18n 'Submit'}}</button>
         <div class="error">{{error}}</div>
-      </form>
+      </form> 
     </div>
-
   </section>
-
+ 
+ 

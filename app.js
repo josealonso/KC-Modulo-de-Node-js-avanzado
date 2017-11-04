@@ -4,9 +4,10 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');    // We can get info from POST and/or URL parameters
 const session = require('express-session');
 const sessionAuth = require('./lib/sessionAuth');
+const jwtAuth = require('./lib/jwtAuth');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 
@@ -19,7 +20,7 @@ require('dotenv').config(); // inicializamos variables de entrono desde el fiche
 // Cargamos las definiciones de todos nuestros modelos
 require('./models/Anuncio');
 require('./models/Usuario');
- 
+
 // view engine setup
 // Source: https://webapplog.com/jade-handlebars-express/
 let helpers = require('./public/hs/helpers');
@@ -35,8 +36,8 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 // app.use(logger('dev'));
-if (process.env.LOG_FORMAT !== 'nolog' ) {
-  app.use(logger(process.env.LOG_FORMAT || 'dev'));
+if (process.env.LOG_FORMAT !== 'nolog') {
+	app.use(logger(process.env.LOG_FORMAT || 'dev'));
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,7 +52,21 @@ app.use(i18n.init);
 app.locals.title = 'NodePop';
 
 // API v1
-// app.use('/apiv1/anuncios', jwtAuth(), require('./routes/apiv1/anuncios'));
+app.use('/apiv1/anuncios', jwtAuth(), require('./routes/apiv1/anuncios'));
+/*app.get('/apiv1/anuncios', function(req, res, next) {
+	// console.log('GALLETAS:', req.cookies);
+	let existingToken = req.cookies.auth; // window.localStorage.getItem('myJWT');
+	let token = existingToken || req.body.token || req.query.token || req.get('x-access-token');
+	console.log('Token q usaremos-TRA:', existingToken);
+
+	if (!token) {
+		const err = new Error('no creado token');
+		next(err);
+		return;
+	}
+}); */
+
+// app.get( '/login',  loginController.index);
 
 // catch API 404 and forward to error handler
 // app.use('/apiv1/', function (req, res, next) {
@@ -75,19 +90,19 @@ app.use(
 			autoReconnect: true,
 			clear_interval: 3600
 		})
-	}) 
+	})
 );
 
 // Login
 const loginController = require('./routes/loginController');
 
 // usamos las rutas de un controlador
-app.get( '/login',  loginController.index);
-app.post('/login',  loginController.post);
-//app.post('/loginjwt',  loginController.postLoginJWT);
-app.get( '/logout', loginController.logout);
+app.get('/login', loginController.index);   // Si comenta esta línea, el navegador da error: "TOO_MANY_REDIRECTS" !!
+//app.post('/login', loginController.post);
+app.post('/login', loginController.jwtCreation);
+app.get('/logout', loginController.logout);
 
-app.use('/', sessionAuth(), require('./routes/index'));    // Ponía sessionAuth y no cargaba ninguna página !!
+app.use('/', sessionAuth(), require('./routes/index')); // Ponía sessionAuth, sin paréntesis, y no cargaba ninguna página !!
 app.use('/anuncios', require('./routes/index'));
 // app.use('/hola', require('./routes/hola').router);
 
@@ -122,7 +137,7 @@ app.use(function(err, req, res, next) {
 
 	// si es una petición al API respondo JSON...
 	if (isAPI(req)) {
-		res.json({ success: false, error: err.message });
+		res.json({ success: false, error: 'Petición al API. ' + err.message });
 		return;
 	}
 

@@ -40,6 +40,8 @@ router.get('/', (req, res, next) => {
     filters.nombre = new RegExp('^' + req.query.nombre, 'i');
   }
 
+  //anuncioSchema.statics.list = async function(filters, startRow, numRows, sortField, includeTotal, cb)
+
   Anuncio.list(filters, start, limit, sort, includeTotal, function (err, anuncios) {
     if (err) return next(err);
     res.json({ ok: true, result: anuncios });

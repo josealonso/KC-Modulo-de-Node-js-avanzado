@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
 		const includeTotal = true;
 
 		const filters = {};
-		if (req.query.tag) { 
+		if (req.query.tag) {
 		}
 		if (req.query.venta) {
 			filters.venta = req.query.venta;
@@ -22,20 +22,18 @@ router.get('/', async function(req, res, next) {
 
 		const { total, rows } = await Anuncio.list(filters, start, limit, sort, includeTotal);
 		res.render('anuncios', { total, anuncios: rows }); // Original
-		// res.render('anuncios', { anuncios: rows });   // JR
 	} catch (err) {
 		return res.next(err);
 	}
 });
 
 router.get('/lang/:locale', (req, res, next) => {
-  //console.log('LA VISTA TIENE ESTO:', res.locals);
+	//console.log('LA VISTA TIENE ESTO:', res.locals);
 	const locale = req.params.locale;
 	console.log('LCambio a ', locale);
 	const referer = req.query.redir || req.get('referer');
 	res.cookie('nodepop-lang', locale, { maxAge: 900000, httpOnly: true });
 	res.redirect(referer);
 });
-
 
 module.exports = router;

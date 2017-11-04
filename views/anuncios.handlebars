@@ -21,17 +21,20 @@
           <th>#</th>
         </tr></thead>
         <tbody>
-
+ 
         {{#each anuncios}}
           <tr>
-            <td>{{this.nombre}}</td>
+            <td>{{i18n this.nombre}}</td>
             <td>{{this.venta}}</td>
             <td style="text-align: right"><{{this.precio}} / 100 €</td>
             <td><img src="{{this.foto}}"></td>
-            <td>{{this.tags}}</td>
+            <td>{{#each this.tags}}
+              {{i18n this}}
+            {{/each}}
+            </td>   
             <td>{{this.anuncio._id}}</td>
           </tr>
-         {{/each}}
+        {{/each}}
 
         </tbody>
       </table>
