@@ -1,0 +1,24 @@
+{{> header}}
+
+<section class="main"> 
+  <div class="container h-100"> 
+      <div class="row h-100">
+        <p>{{i18n 'Please login to access the API'}}</p>
+      </div>
+
+    <div class="row h-100">
+      <form method="POST"> 
+        <div class="form-group">
+          <label for="email">{{i18n 'User'}}</label>
+          <input type="text" class="form-control" id="user" aria-describedby="emailHelp" placeholder={{i18n 'Enter user'}}
+                name="user"
+                value={{user}} >
+          <small id="emailHelp" class="form-text text-muted"></small>
+        </div>
+        <button type="submit" id="API-login" class="btn btn-primary">{{i18n 'Submit'}}</button>
+        <div class="error">{{error}}</div>
+      </form> 
+    </div>
+  </section>
+ 
+ 

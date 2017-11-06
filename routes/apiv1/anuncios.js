@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 
 router.get('/', (req, res, next) => {
-
+  console.log('              función de FILTRADO para el API!!');
   const start = parseInt(req.query.start) || 0;
   const limit = parseInt(req.query.limit) || 1000; // nuestro api devuelve max 1000 registros
   const sort = req.query.sort || '_id';
@@ -44,7 +44,7 @@ router.get('/', (req, res, next) => {
 
   Anuncio.list(filters, start, limit, sort, includeTotal, function (err, anuncios) {
     if (err) return next(err);
-    res.json({ ok: true, result: anuncios });
+    res.json({ ok: true, result: anuncios }); 
   });
 });
 

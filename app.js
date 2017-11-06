@@ -11,21 +11,22 @@ const jwtAuth = require('./lib/jwtAuth');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 
-/* jshint ignore:start */
+// Conexión a la base de datos
 const db = require('./lib/connectMongoose'); // ??
-/* jshint ignore:end */
 
 require('dotenv').config(); // inicializamos variables de entrono desde el fichero .env
 
 // Cargamos las definiciones de todos nuestros modelos
 require('./models/Anuncio');
 require('./models/Usuario');
+require('./models/UsuarioDelAPI');
 
 // view engine setup
 // Source: https://webapplog.com/jade-handlebars-express/
 let helpers = require('./public/hs/helpers');
 
 const app = express();
+//let dirName = __dirname;  //.includes('api') ? path.dirname(module.parent.__dirname) : __dirname;
 
 // Load handlebars engine and load our configuration
 // from the file hbsconf.js under a libs folder at the same level of the application
@@ -42,35 +43,29 @@ if (process.env.LOG_FORMAT !== 'nolog') {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-// let myLocale = 'en';
 const i18n = require('./lib/i18nSetup')();
 app.use(i18n.init);
 
 // Global Template variables
 app.locals.title = 'NodePop';
 
-// API v1
-app.use('/apiv1/anuncios', jwtAuth(), require('./routes/apiv1/anuncios'));
-/*app.get('/apiv1/anuncios', function(req, res, next) {
-	// console.log('GALLETAS:', req.cookies);
-	let existingToken = req.cookies.auth; // window.localStorage.getItem('myJWT');
-	let token = existingToken || req.body.token || req.query.token || req.get('x-access-token');
-	console.log('Token q usaremos-TRA:', existingToken);
+// Login
+const loginController = require('./routes/loginController');
+const APILoginController = require('./routes/apiv1/loginController');
+ 
+app.get('/api/authenticate', APILoginController.index);
+app.post('/api/authenticate', APILoginController.post);
+app.get('/api/logout', APILoginController.logout);
 
-	if (!token) {
-		const err = new Error('no creado token');
-		next(err);
-		return;
-	}
-}); */
-
-// app.get( '/login',  loginController.index);
+//app.post('/api/authenticate', loginController.APIPost);   //jwtCreation);
+//app.use('/api/anuncios', jwtAuth(), require('./routes/apiv1/anuncios'));
 
 // catch API 404 and forward to error handler
-// app.use('/apiv1/', function (req, res, next) {
-app.use('/apiv1', function(req, res, next) {
+// app.use('/api', function (req, res, next) {
+app.use('/api', function(req, res, next) {
 	const err = new Error(__('not_found'));
 	err.status = 404;
 	next(err);
@@ -93,15 +88,12 @@ app.use(
 	})
 );
 
-// Login
-const loginController = require('./routes/loginController');
 
 // usamos las rutas de un controlador
 app.get('/login', loginController.index);   // Si comenta esta línea, el navegador da error: "TOO_MANY_REDIRECTS" !!
-//app.post('/login', loginController.post);
-app.post('/login', loginController.jwtCreation);
+app.post('/login', loginController.post);
 app.get('/logout', loginController.logout);
-
+ 
 app.use('/', sessionAuth(), require('./routes/index')); // Ponía sessionAuth, sin paréntesis, y no cargaba ninguna página !!
 app.use('/anuncios', require('./routes/index'));
 // app.use('/hola', require('./routes/hola').router);

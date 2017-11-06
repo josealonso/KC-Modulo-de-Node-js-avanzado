@@ -30,5 +30,8 @@
 	"Bicycle": "Bicicleta",
 	"iPhone 3GS": "iPhone 3GS",
 	"Bicicleta": "Bicicleta",
-	"Submit": "Enviar"
+	"Submit": "Enviar",
+	"Please login to access the API": "Por favor identifícate para acceder al API",
+	"User": "Usuario",
+	"Enter user": "Introduce el nombre de usuario del API"
 }

@@ -14,6 +14,7 @@ const i18n = require('../lib/i18nSetup')();
 /* GET anuncios page. */
 router.get('/', async function(req, res, next) {
 	try {
+		console.log('       Función de FILTRADO para las vistas!!');
 		const start = parseInt(req.query.start) || 0;
 		const limit = parseInt(req.query.limit) || 1000; // nuestro api devuelve max 1000 registros
 		const sort = req.query.sort || '_id';
@@ -21,6 +22,7 @@ router.get('/', async function(req, res, next) {
 
 		const filters = {};
 		if (req.query.tag) { 
+			filters.tags = req.query.tag;      // JR
 		}
 		if (req.query.venta) {
 			filters.venta = req.query.venta;
